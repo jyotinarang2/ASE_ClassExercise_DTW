@@ -61,8 +61,8 @@ public:
 private:
 
 	int iMatrixDimensions[kNumMatrixDimensions];
-	float **ppfCost;
-	int **iTracebackPath;
+	float **ppfCost = 0;
+	int **iTracebackPath = 0 ;
 	int iCurrentDirection;
 	bool bIsInit = false;
 	bool processed = false;

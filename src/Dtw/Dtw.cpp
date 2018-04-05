@@ -11,10 +11,10 @@ CDtw::CDtw(void)
 }
 
 CDtw::~CDtw(void)
-{
+{   
 	for (int i = 0; i < iMatrixDimensions[MatrixDimension_t::kRow]; i++) {
-		delete ppfCost[i];
-		delete iTracebackPath[i];
+		delete[] ppfCost[i];
+		delete[] iTracebackPath[i];
 	}
 	delete[] ppfCost;
 	delete[] iTracebackPath;
