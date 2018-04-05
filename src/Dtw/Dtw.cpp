@@ -122,7 +122,10 @@ int CDtw::getPathLength()
 	int count = 0;
 	int columns = iMatrixDimensions[kCol]-1;
 	int rows = iMatrixDimensions[kRow]-1;
-	
+	if (rows == 0) {
+		return columns+1;
+	}
+
 	while (columns > 0 || rows > 0) {
 		if (iTracebackPath[rows][columns] == 0) {
 			--columns; --rows;
