@@ -48,6 +48,15 @@ Error_t CDtw::init(int iNumRows, int iNumCols)
 
 Error_t CDtw::reset()
 {
+	
+	for (int i = 0; i < iMatrixDimensions[MatrixDimension_t::kRow]; i++) {
+		delete ppfCost[i];
+		delete iTracebackPath[i];
+	}
+	delete[] ppfCost;
+	delete[] iTracebackPath;
+	ppfCost = 0;
+	iTracebackPath = 0;
 	return kNoError;
 }
 
@@ -57,7 +66,7 @@ Error_t CDtw::process(float **ppfDistanceMatrix)
 	{
 		return kNotInitializedError;
 	}
-	if (ppfDistanceMatrix == 0) {
+	if (ppfDistanceMatrix == 0 || ppfDistanceMatrix==NULL) {
 		return kFunctionInvalidArgsError;
 	}
 	ppfCost[0][0] = ppfDistanceMatrix[0][0];
