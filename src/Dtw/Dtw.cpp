@@ -4,7 +4,7 @@
 
 #include "Dtw.h"
 
-using namespace std;
+
 CDtw::CDtw(void)
 {
 
@@ -112,6 +112,7 @@ int CDtw::getPathLength()
 	int count = 0;
 	int columns = iMatrixDimensions[kCol]-1;
 	int rows = iMatrixDimensions[kRow]-1;
+	
 	while (columns > 0 || rows > 0) {
 		if (iTracebackPath[rows][columns] == 0) {
 			--columns; --rows;
