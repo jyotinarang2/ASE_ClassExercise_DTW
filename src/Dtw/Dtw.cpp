@@ -57,6 +57,9 @@ Error_t CDtw::process(float **ppfDistanceMatrix)
 	{
 		return kNotInitializedError;
 	}
+	if (ppfDistanceMatrix == 0) {
+		return kFunctionInvalidArgsError;
+	}
 	ppfCost[0][0] = ppfDistanceMatrix[0][0];
 
 	for (int i = 1; i < iMatrixDimensions[kCol]; i++)
