@@ -3,7 +3,7 @@
 #include "Util.h"
 
 #include "Dtw.h"
-#include<iostream>
+
 using namespace std;
 CDtw::CDtw(void)
 {
@@ -129,6 +129,59 @@ float CDtw::getPathCost() const
 
 Error_t CDtw::getPath(int **ppiPathResult) const
 {
+	
+	int columns = iMatrixDimensions[kCol] - 1;
+	int rows = iMatrixDimensions[kRow] - 1;
+	int count = 0;
+	while (columns > 0 || rows > 0) {
+		if (iTracebackPath[rows][columns] == 0) {
+			--columns; --rows;
+			count++;
+			
+		}
+		if (iTracebackPath[rows][columns] == 1) {
+			--columns;
+			count++;
+
+		}
+		if (iTracebackPath[rows][columns] == 2) {
+			--rows;
+			count++;
+			
+		}
+	}
+	//count = count + 1;
+	columns = iMatrixDimensions[kCol] - 1;
+	rows = iMatrixDimensions[kRow] - 1;
+	//ppiPathResult = new int*[MatrixDimension_t::kNumMatrixDimensions];
+	//for (int i = 0; i < MatrixDimension_t::kNumMatrixDimensions; i++)
+	//	ppiPathResult[i] = new int[count+1];
+	int count_x = count, count_y = count;
+	while (columns > 0 || rows > 0) {
+		if (iTracebackPath[rows][columns] == 0) {
+			ppiPathResult[0][count_x--] = rows;
+			ppiPathResult[1][count_y--] = columns;
+			--columns; --rows;
+			
+
+		}
+		else if (iTracebackPath[rows][columns] == 1) {
+			ppiPathResult[0][count_x--] = rows;
+			ppiPathResult[1][count_y--] = columns;
+			--columns;
+		
+
+		}
+		else if (iTracebackPath[rows][columns] == 2) {
+			ppiPathResult[0][count_x--] = rows;
+			ppiPathResult[1][count_y--] = columns;
+			--rows;
+			
+
+		}
+	}
+	ppiPathResult[0][count_x] = rows;
+	ppiPathResult[1][count_y] = columns;
 	return kNoError;
 }
 
