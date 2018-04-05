@@ -18,6 +18,9 @@ CDtw::~CDtw(void)
 Error_t CDtw::init(int iNumRows, int iNumCols)
 {
 	//bIsInit = 1;
+	if ((iNumRows <= 0) || (iNumCols <= 0)) {
+		return kFunctionInvalidArgsError;
+	}
 	ppfCost = new float*[iNumRows];
 	for (int i = 0; i < iNumRows; i++)
 		ppfCost[i] = new float[iNumCols];
@@ -39,6 +42,7 @@ Error_t CDtw::init(int iNumRows, int iNumCols)
 	}
 	iMatrixDimensions[MatrixDimension_t::kRow] = iNumRows;
 	iMatrixDimensions[MatrixDimension_t::kCol] = iNumCols;
+	bIsInit = true;
 	return kNoError;
 }
 
@@ -49,10 +53,10 @@ Error_t CDtw::reset()
 
 Error_t CDtw::process(float **ppfDistanceMatrix)
 {
-	/*if (!bIsInit)
+	if (!bIsInit)
 	{
 		return kNotInitializedError;
-	}*/
+	}
 	ppfCost[0][0] = ppfDistanceMatrix[0][0];
 
 	for (int i = 1; i < iMatrixDimensions[kCol]; i++)
