@@ -65,6 +65,7 @@ private:
 	int **iTracebackPath;
 	int iCurrentDirection;
 	bool bIsInit = false;
+	bool processed = false;
 	enum Directions_t
 	{
 		kHoriz,

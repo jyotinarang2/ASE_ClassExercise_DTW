@@ -12,6 +12,14 @@ CDtw::CDtw(void)
 
 CDtw::~CDtw(void)
 {
+	for (int i = 0; i < iMatrixDimensions[MatrixDimension_t::kRow]; i++) {
+		delete ppfCost[i];
+		delete iTracebackPath[i];
+	}
+	delete[] ppfCost;
+	delete[] iTracebackPath;
+	ppfCost = 0;
+	iTracebackPath = 0;
 
 }
 
@@ -49,14 +57,7 @@ Error_t CDtw::init(int iNumRows, int iNumCols)
 Error_t CDtw::reset()
 {
 	
-	for (int i = 0; i < iMatrixDimensions[MatrixDimension_t::kRow]; i++) {
-		delete ppfCost[i];
-		delete iTracebackPath[i];
-	}
-	delete[] ppfCost;
-	delete[] iTracebackPath;
-	ppfCost = 0;
-	iTracebackPath = 0;
+	
 	return kNoError;
 }
 
@@ -93,7 +94,7 @@ Error_t CDtw::process(float **ppfDistanceMatrix)
 			ppfCost[i][j] = ppfDistanceMatrix[i][j] + min_value;
 		}
 	}
-	
+	processed = true;
 	return kNoError;
 }
 float CDtw::computeMinimum(float a, float b, float c)
@@ -136,7 +137,12 @@ int CDtw::getPathLength()
 			count++;
 		}
 	}
-	return count+1;
+	if (!processed) {
+		return 0;
+	}
+	else {
+		return count + 1;
+	}
 }
 
 float CDtw::getPathCost() const
